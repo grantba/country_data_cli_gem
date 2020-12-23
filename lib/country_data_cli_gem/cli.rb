@@ -28,7 +28,23 @@ class CLI
     end
 
     def user_options
+        puts "Great! Please choose which country you would like more information about."
+        puts "Please type '1' if you would like to see a list of countries to choose from."
+        puts "Please type '2' if you would like a random country chosen for you."
+        puts "Please type '3' if you would like to type in the name of the country you would like more information about."
 
+        selection = response
+
+        case selection
+        when "1"
+            ordered_list
+        when "2"
+            randon_selection
+        when "3"
+            selection_by_name
+        else
+            invalid_response
+        end
     end
 
     def invalid_response
