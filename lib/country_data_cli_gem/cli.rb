@@ -40,7 +40,7 @@ class CLI
         when "1"
             ordered_list
         when "2"
-            randon_selection
+            random_selection
         when "3"
             selection_by_name
         when "exit"
@@ -57,21 +57,29 @@ class CLI
         option_from_ordered_list
     end
 
+    def random_selection
+        index = rand(0..249)
+        country_data(index)
+        continue
+    end
+
     def option_from_ordered_list
         index = response.to_i - 1
+        country_data(index)
+        continue
+    end
 
+    def country_data(index)
         puts "Name: #{Country.all[index].name}"
         puts "Capital: #{Country.all[index].capital}"
         puts "Region: #{Country.all[index].region}"
         puts "Population: #{Country.all[index].population}"
-        puts "Timezone: #{Country.all[index].timezones.join(", ")}"
+        puts "Timezone(s): #{Country.all[index].timezones.join(", ")}"
         puts "Border(s): #{Country.all[index].borders.join(", ")}"
         puts "Currency/Currencies: #{Country.all[index].currencies[0]["name"]}"
         puts "Language(s): #{Country.all[index].languages[0]["name"]}"
         puts "Flag: #{Country.all[index].flag}"
         puts "I hope you found that interesting! Would you like to learn more?"
-
-        continue
     end
 
     def invalid_response
