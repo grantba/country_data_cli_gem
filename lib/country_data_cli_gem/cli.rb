@@ -65,9 +65,10 @@ class CLI
 
     def country_by_name
         puts "Great. Please enter the name of the country."
-        selection = response.capitalize()
-
-        country_selection = Country.all.find {|country| country.name == selection}
+        selection = response.capitalize().strip
+        index = Country.all.find_index {|country| country.name == selection}
+        Country.country_data(index)
+        continue
     end
 
     def option_from_ordered_list
