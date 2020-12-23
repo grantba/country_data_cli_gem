@@ -8,7 +8,7 @@ class CLI
     end
 
     def continue
-        puts "Please type 'y' to continue or 'exit' to leave the program."
+        puts "Please type 'y' for yes or 'exit' to leave the program."
         menu
     end
 
@@ -33,7 +33,7 @@ class CLI
         puts "Please type '1' if you would like to see a list of countries to choose from."
         puts "Please type '2' if you would like a random country chosen for you."
         puts "Please type '3' if you would like to type in the name of the country you would like more information about."
-        
+
         selection = response
 
         case selection
@@ -43,9 +43,35 @@ class CLI
             randon_selection
         when "3"
             selection_by_name
+        when "exit"
+            exit_message
         else
             invalid_response
         end
+    end
+
+    def ordered_list
+        Country.all.each.with_index(1) do |country, index|
+            puts "#{index}. #{country.name}"
+        end
+        option_from_ordered_list
+    end
+
+    def option_from_ordered_list
+        index = response.to_i - 1
+
+        puts "Name: #{Country.all[index].name}"
+        puts "Capital: #{Country.all[index].capital}"
+        puts "Region: #{Country.all[index].region}"
+        puts "Population: #{Country.all[index].population}"
+        puts "Timezone: #{Country.all[index].timezones.join(", ")}"
+        puts "Border(s): #{Country.all[index].borders.join(", ")}"
+        puts "Currency/Currencies: #{Country.all[index].currencies[0]["name"]}"
+        puts "Language(s): #{Country.all[index].languages[0]["name"]}"
+        puts "Flag: #{Country.all[index].flag}"
+        puts "I hope you found that interesting! Would you like to learn more?"
+
+        continue
     end
 
     def invalid_response
