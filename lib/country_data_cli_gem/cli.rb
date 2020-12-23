@@ -3,6 +3,7 @@ class CLI
     def call
         puts "Hi. Welcome to the Country Data CLI Gem."
         puts "Would you like to learn data about various countries around the world?"
+        API.get_data
         continue
     end
 
@@ -32,7 +33,7 @@ class CLI
         puts "Please type '1' if you would like to see a list of countries to choose from."
         puts "Please type '2' if you would like a random country chosen for you."
         puts "Please type '3' if you would like to type in the name of the country you would like more information about."
-
+        
         selection = response
 
         case selection

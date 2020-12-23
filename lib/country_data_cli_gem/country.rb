@@ -1,13 +1,12 @@
 class Country
 
-    attr_accessor :name, :currency, :language, :capital_city
+    attr_accessor :name, :capital, :region, :population, :timezones, :borders, :currencies, :languages, :flag
     @@all = []
 
-    def initialize(name, currency, language, capital_city)
-        @name = name
-        @currency = currency
-        @language = language
-        @capital_city = capital_city
+    def initialize(country_hash)
+        country_hash.each do |k, v|
+            self.send("#{k}=", v) if self.respond_to?("#{k}=")
+        end
         save
     end
 
