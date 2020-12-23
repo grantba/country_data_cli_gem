@@ -1,8 +1,6 @@
 # CountryDataCliGem
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/country_data_cli_gem`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This Ruby Gem provides a CLI to view information about various countries around the world. The information provided by this Gem was obtained through Rest Countries API, https://restcountries.eu/rest/v2/all.
 
 ## Installation
 
@@ -22,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ ./bin/country_data_cli_gem
 
 ## Development
 
