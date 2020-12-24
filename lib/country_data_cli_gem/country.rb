@@ -30,13 +30,22 @@ class CountryDataCliGem::Country
         puts "Population: #{population.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}"
     end
 
+    def self.borders(index)
+        if self.all[index].borders.empty?
+            puts "Border(s): This country has no borders and is surrounded by water. Therefore, it is an island."
+        else
+            puts "Border(s): #{self.all[index].borders.join(", ")}"
+        end
+    end
+
     def self.country_data(index)
         puts "Name: #{self.all[index].name}"
         puts "Capital: #{self.all[index].capital}"
         puts "Region: #{self.all[index].region}"
         population_conversion(index)
         puts "Timezone(s): #{self.all[index].timezones.join(", ")}"
-        puts "Border(s): #{self.all[index].borders.join(", ")}" unless self.all[index].borders.empty?
+        borders(index)
+        #puts "Border(s): #{self.all[index].borders.join(", ")}" unless self.all[index].borders.empty?
         puts "Currency/Currencies: #{self.all[index].currencies[0]["name"]}"
         #puts "Language(s): "
         #print_languages(index)
