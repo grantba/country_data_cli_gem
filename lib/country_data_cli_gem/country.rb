@@ -1,4 +1,4 @@
-class Country
+class CountryDataCliGem::Country
 
     attr_accessor :name, :capital, :region, :population, :timezones, :borders, :currencies, :languages, :flag
     @@all = []
@@ -18,14 +18,28 @@ class Country
         @@all
     end
 
+    # def self.print_languages(index)
+    #     self.all[index].languages.each do |hash|
+    #         hash[:name]
+    #     end
+    #     binding.pry
+    # end
+
+    def self.population_conversion(index)
+        population = self.all[index].population
+        puts "Population: #{population.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}"
+    end
+
     def self.country_data(index)
         puts "Name: #{self.all[index].name}"
         puts "Capital: #{self.all[index].capital}"
         puts "Region: #{self.all[index].region}"
-        puts "Population: #{self.all[index].population}"
+        population_conversion(index)
         puts "Timezone(s): #{self.all[index].timezones.join(", ")}"
-        puts "Border(s): #{self.all[index].borders.join(", ")}"
+        puts "Border(s): #{self.all[index].borders.join(", ")}" unless self.all[index].borders.empty?
         puts "Currency/Currencies: #{self.all[index].currencies[0]["name"]}"
+        #puts "Language(s): "
+        #print_languages(index)
         puts "Language(s): #{self.all[index].languages[0]["name"]}"
         puts "Flag: #{self.all[index].flag}"
         puts "I hope you found that interesting! Would you like to learn more?"

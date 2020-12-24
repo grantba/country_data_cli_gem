@@ -2,6 +2,5 @@
 
 require_relative '../lib/environment.rb'
 
-#CountryDataCliGem::
-CLI.new.call
+CountryDataCliGem::CLI.new.call
 

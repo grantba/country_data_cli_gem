@@ -1,9 +1,9 @@
-class CLI
+class CountryDataCliGem::CLI
 
     def call
         puts "Hi. Welcome to the Country Data CLI Gem."
         puts "Would you like to learn data about various countries around the world?"
-        API.get_data
+        CountryDataCliGem::API.get_data
         continue
     end
 
@@ -13,7 +13,7 @@ class CLI
     end
 
     def response
-        gets.strip
+        gets.strip.downcase
     end
 
     def menu
@@ -51,7 +51,7 @@ class CLI
     end
 
     def ordered_list
-        Country.all.each.with_index(1) do |country, index|
+        CountryDataCliGem::Country.all.each.with_index(1) do |country, index|
             puts "#{index}. #{country.name}"
         end
         option_from_ordered_list
@@ -59,21 +59,21 @@ class CLI
 
     def random_selection
         index = rand(0..249)
-        Country.country_data(index)
+        CountryDataCliGem::Country.country_data(index)
         continue
     end
 
     def country_by_name
         puts "Great. Please enter the name of the country."
         selection = response.capitalize().strip
-        index = Country.all.find_index {|country| country.name == selection}
-        Country.country_data(index)
+        index = CountryDataCliGem::Country.all.find_index {|country| country.name == selection}
+        CountryDataCliGem::Country.country_data(index)
         continue
     end
 
     def option_from_ordered_list
         index = response.to_i - 1
-        Country.country_data(index)
+        CountryDataCliGem::Country.country_data(index)
         continue
     end
 

@@ -77,3 +77,11 @@ end
 info = CountryInfo.new.parse
 
 
+    # return an array of hashes  
+    def self.print_languages(index)
+        self.all[index].languages |hash|
+            hash[:name]
+        end 
+    end 
+
+            #puts "Language(s): #{self.all[index].languages[0]["name"]}"
