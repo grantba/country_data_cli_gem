@@ -83,5 +83,7 @@ info = CountryInfo.new.parse
             hash[:name]
         end 
     end 
+#puts "Currency/Currencies: #{self.all[index].currencies[0]["name"]}"
+#puts "Language(s): #{self.all[index].languages[0]["name"]}"
+#puts "Border(s): #{self.all[index].borders.join(", ")}" unless self.all[index].borders.empty?
 
-            #puts "Language(s): #{self.all[index].languages[0]["name"]}"

@@ -17,13 +17,22 @@ class CountryDataCliGem::Country
     def self.all
         @@all
     end
+    
+    def self.print_currencies(index)
+        arr = []
+        self.all[index].currencies.each do |hash|
+            arr << hash["name"]
+        end
+        puts "Currency/currencies: #{arr.join(", ")}"
+    end
 
-    # def self.print_languages(index)
-    #     self.all[index].languages.each do |hash|
-    #         hash[:name]
-    #     end
-    #     binding.pry
-    # end
+    def self.print_languages(index)
+        arr = []
+        self.all[index].languages.each do |hash|
+            arr << hash["name"]
+        end
+        puts "Language(s): #{arr.join(", ")}"
+    end
 
     def self.population_conversion(index)
         population = self.all[index].population
@@ -45,11 +54,8 @@ class CountryDataCliGem::Country
         population_conversion(index)
         puts "Timezone(s): #{self.all[index].timezones.join(", ")}"
         borders(index)
-        #puts "Border(s): #{self.all[index].borders.join(", ")}" unless self.all[index].borders.empty?
-        puts "Currency/Currencies: #{self.all[index].currencies[0]["name"]}"
-        #puts "Language(s): "
-        #print_languages(index)
-        puts "Language(s): #{self.all[index].languages[0]["name"]}"
+        print_currencies(index)
+        print_languages(index)
         puts "Flag: #{self.all[index].flag}"
         puts "I hope you found that interesting! Would you like to learn more?"
     end

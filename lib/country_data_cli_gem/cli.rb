@@ -54,6 +54,7 @@ class CountryDataCliGem::CLI
         CountryDataCliGem::Country.all.each.with_index(1) do |country, index|
             puts "#{index}. #{country.name}"
         end
+        puts "Please type the number of the country you'd like to see more data about."
         option_from_ordered_list
     end
 
@@ -64,7 +65,7 @@ class CountryDataCliGem::CLI
     end
 
     def country_by_name
-        puts "Great. Please enter the name of the country."
+        puts "Great. Please enter the name of the country you'd like to see more data about."
         selection = response.capitalize().strip
         index = CountryDataCliGem::Country.all.find_index {|country| country.name == selection}
         CountryDataCliGem::Country.country_data(index)
