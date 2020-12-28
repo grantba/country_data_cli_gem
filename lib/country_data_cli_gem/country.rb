@@ -22,7 +22,7 @@ class CountryDataCliGem::Country
         if self.all[index].capital == nil || self.all[index].capital == "" || self.all[index].capital == " "
             puts "This country does not have a specified capital."
         else
-            puts "#{self.all[index].flag}"
+            puts "#{self.all[index].capital}"
         end
     end
 

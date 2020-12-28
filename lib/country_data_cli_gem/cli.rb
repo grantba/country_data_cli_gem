@@ -66,10 +66,14 @@ class CountryDataCliGem::CLI
 
     def country_by_name
         puts "Great. Please enter the name of the country you'd like to see more data about."
-        selection = response.capitalize().strip
-        index = CountryDataCliGem::Country.all.find_index {|country| country.name == selection}
-        CountryDataCliGem::Country.country_data(index)
-        continue
+        selection = response.downcase.strip
+        if CountryDataCliGem::Country.all.find {|country| country.name.downcase.strip == selection}
+            index = CountryDataCliGem::Country.all.find_index {|country| country.name.downcase.strip == selection}
+            CountryDataCliGem::Country.country_data(index)
+            continue
+        else 
+            invalid_response
+        end
     end
 
     def option_from_ordered_list
