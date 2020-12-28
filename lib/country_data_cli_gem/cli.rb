@@ -8,7 +8,7 @@ class CountryDataCliGem::CLI
     end
 
     def continue
-        puts "Please type 'y' for yes or 'exit' to leave the program."
+        puts "Type 'y' for yes or 'exit' to leave the program."
         menu
     end
 
@@ -29,10 +29,10 @@ class CountryDataCliGem::CLI
     end
 
     def user_options
-        puts "Great! Please choose which country you would like more information about."
-        puts "Please type '1' if you would like to see a list of countries to choose from."
-        puts "Please type '2' if you would like a random country chosen for you."
-        puts "Please type '3' if you would like to type in the name of the country you would like more information about."
+        puts "Great! Please make a selection from the list below."
+        puts "Type '1' if you would like to see a list of countries to choose from."
+        puts "Type '2' if you would like a random country chosen for you."
+        puts "Type '3' if you would like to type in the name of the country you would like more information about."
 
         selection = response
 

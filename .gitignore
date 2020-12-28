@@ -87,3 +87,23 @@ info = CountryInfo.new.parse
 #puts "Language(s): #{self.all[index].languages[0]["name"]}"
 #puts "Border(s): #{self.all[index].borders.join(", ")}" unless self.all[index].borders.empty?
 
+require 'launchy'
+require 'watir'
+gem 'watir', '~> 6.17'
+gem 'webdrivers'
+    def self.flag(index)
+        #chromedriver_path = File.join(File.absolute_path('../..', File.dirname(__FILE__)),"browsers","chromedriver.exe")
+        File.join(File.absolute_path('../..', File.dirname(__FILE__)),"browsers","chromedriver.exe")
+        Selenium::WebDriver::Chrome::Service.driver_path = File.join(File.absolute_path('../..', File.dirname(__FILE__)),"browsers","chromedriver.exe")
+        b = Watir::Browser.new :chrome, driver_path: chromedriver_path
+        #b = Watir::Browser.new :chrome
+        b.goto(self.all[index].flag)
+        puts "Flag: "
+        #b.goto(https://chromedriver.com/index.html)
+        #b.link(text: self.all[index].flag).click
+        b.close
+        # puts "Flag: " 
+        # <a href= "#{self.all[index].flag}" >
+        # Click here to open the link!
+        # <a>
+    end

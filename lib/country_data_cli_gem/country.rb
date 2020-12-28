@@ -17,11 +17,27 @@ class CountryDataCliGem::Country
     def self.all
         @@all
     end
+
+    def self.capital(index)
+        if self.all[index].capital == nil || self.all[index].capital == "" || self.all[index].capital == " "
+            puts "This country does not have a specified capital."
+        else
+            puts "#{self.all[index].flag}"
+        end
+    end
+
+    def self.region(index)
+        if self.all[index].region == nil || self.all[index].capital == "" || self.all[index].capital == " "
+            puts "This country does not have a specified region."
+        else
+            puts "#{self.all[index].region}"
+        end
+    end
     
     def self.print_currencies(index)
         arr = []
         self.all[index].currencies.each do |hash|
-            arr << hash["name"]
+            arr << hash["name"] unless hash["name"] == nil
         end
         puts "Currency/currencies: #{arr.join(", ")}"
     end
@@ -29,7 +45,7 @@ class CountryDataCliGem::Country
     def self.print_languages(index)
         arr = []
         self.all[index].languages.each do |hash|
-            arr << hash["name"]
+            arr << hash["name"] unless hash["name"] == nil
         end
         puts "Language(s): #{arr.join(", ")}"
     end
@@ -49,8 +65,10 @@ class CountryDataCliGem::Country
 
     def self.country_data(index)
         puts "Name: #{self.all[index].name}"
-        puts "Capital: #{self.all[index].capital}"
-        puts "Region: #{self.all[index].region}"
+        print "Capital: "
+        capital(index)
+        print "Region: "
+        region(index)
         population_conversion(index)
         puts "Timezone(s): #{self.all[index].timezones.join(", ")}"
         borders(index)
