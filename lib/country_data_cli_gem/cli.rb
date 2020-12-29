@@ -8,7 +8,7 @@ class CountryDataCliGem::CLI
     end
 
     def continue
-        puts "Type 'y' for yes or 'exit' to leave the program."
+        puts "Type 'y' to continue or 'exit' to leave the program."
         menu
     end
 
@@ -71,7 +71,7 @@ class CountryDataCliGem::CLI
     end
 
     def country_by_name
-        puts "Great. Please enter the name of the country you'd like to see more data about."
+        puts "Please enter the name of the country you'd like to see more data about."
         selection = response
         if CountryDataCliGem::Country.all.find {|country| country.name.downcase.strip == selection}
             index = CountryDataCliGem::Country.all.find_index {|country| country.name.downcase.strip == selection}

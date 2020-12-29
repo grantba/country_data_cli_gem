@@ -18,6 +18,10 @@ class CountryDataCliGem::Country
         @@all
     end
 
+    def self.name(index)
+        puts "Name: #{self.all[index].name}"
+    end
+
     def self.capital(index)
         if self.all[index].capital.empty?
             puts "Capital: This country does not have a specified capital."
@@ -33,26 +37,14 @@ class CountryDataCliGem::Country
             puts "Region: #{self.all[index].region}"
         end
     end
-    
-    def self.print_currencies(index)
-        arr = []
-        self.all[index].currencies.each do |hash|
-            arr << hash["name"] unless hash["name"] == nil
-        end
-        puts "Currency/currencies: #{arr.join(", ")}"
-    end
 
-    def self.print_languages(index)
-        arr = []
-        self.all[index].languages.each do |hash|
-            arr << hash["name"] unless hash["name"] == nil
-        end
-        puts "Language(s): #{arr.join(", ")}"
-    end
-
-    def self.population_conversion(index)
+    def self.population(index)
         population = self.all[index].population
         puts "Population: #{population.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}"
+    end
+
+    def self.timezones(index)
+        puts "Timezone(s): #{self.all[index].timezones.join(", ")}"
     end
 
     def self.borders(index)
@@ -62,17 +54,37 @@ class CountryDataCliGem::Country
             puts "Border(s): #{self.all[index].borders.join(", ")}"
         end
     end
+    
+    def self.currencies(index)
+        arr = []
+        self.all[index].currencies.each do |hash|
+            arr << hash["name"] unless hash["name"] == nil
+        end
+        puts "Currency/currencies: #{arr.join(", ")}"
+    end
+
+    def self.languages(index)
+        arr = []
+        self.all[index].languages.each do |hash|
+            arr << hash["name"] unless hash["name"] == nil
+        end
+        puts "Language(s): #{arr.join(", ")}"
+    end
+
+    def self.flag(index)
+        puts "Flag: #{self.all[index].flag}"
+    end
 
     def self.country_data(index)
-        puts "Name: #{self.all[index].name}"
+        name(index)
         capital(index)
         region(index)
-        population_conversion(index)
-        puts "Timezone(s): #{self.all[index].timezones.join(", ")}"
+        population(index)
+        timezones(index)
         borders(index)
-        print_currencies(index)
-        print_languages(index)
-        puts "Flag: #{self.all[index].flag}"
+        currencies(index)
+        languages(index)
+        flag(index)
         puts "I hope you found that interesting! Would you like to learn more?"
     end
 
