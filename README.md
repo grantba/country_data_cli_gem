@@ -1,26 +1,17 @@
 # CountryDataCliGem
 
-This Ruby Gem provides a CLI to view information about various countries around the world. The information provided by this Gem was obtained through Rest Countries API, https://restcountries.eu/rest/v2/all.
+This Ruby Gem provides a CLI to view data about various countries around the world. The information provided by this Gem was obtained through Rest Countries API, https://restcountries.eu/rest/v2/all.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+To get started, clone this repo, then run:
+cd country_data_cli_gem
 
-```ruby
-gem 'country_data_cli_gem'
-```
+Next, run:
+bundle install
 
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install country_data_cli_gem
-
-## Usage
-
-    $ ./bin/country_data_cli_gem
+Finally, to start the CLI app, run:
+./bin/country_data_cli_gem
 
 ## Development
 
@@ -30,7 +21,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/country_data_cli_gem. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/country_data_cli_gem/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/grantba/country_data_cli_gem. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/grantba/country_data_cli_gem/blob/master/CODE_OF_CONDUCT.md).
 
 
 ## License

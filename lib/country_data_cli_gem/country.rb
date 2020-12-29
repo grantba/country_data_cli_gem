@@ -19,18 +19,18 @@ class CountryDataCliGem::Country
     end
 
     def self.capital(index)
-        if self.all[index].capital == nil || self.all[index].capital == "" || self.all[index].capital == " "
-            puts "This country does not have a specified capital."
+        if self.all[index].capital.empty?
+            puts "Capital: This country does not have a specified capital."
         else
-            puts "#{self.all[index].capital}"
+            puts "Capital: #{self.all[index].capital}"
         end
     end
 
     def self.region(index)
-        if self.all[index].region == nil || self.all[index].capital == "" || self.all[index].capital == " "
-            puts "This country does not have a specified region."
+        if self.all[index].region.empty?
+            puts "Region: This country does not have a specified region."
         else
-            puts "#{self.all[index].region}"
+            puts "Region: #{self.all[index].region}"
         end
     end
     
@@ -65,9 +65,7 @@ class CountryDataCliGem::Country
 
     def self.country_data(index)
         puts "Name: #{self.all[index].name}"
-        print "Capital: "
         capital(index)
-        print "Region: "
         region(index)
         population_conversion(index)
         puts "Timezone(s): #{self.all[index].timezones.join(", ")}"

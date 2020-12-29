@@ -58,6 +58,12 @@ class CountryDataCliGem::CLI
         option_from_ordered_list
     end
 
+    def option_from_ordered_list
+        index = response.to_i - 1
+        CountryDataCliGem::Country.country_data(index)
+        continue
+    end
+
     def random_selection
         index = rand(0..249)
         CountryDataCliGem::Country.country_data(index)
@@ -88,15 +94,9 @@ class CountryDataCliGem::CLI
     end
 
     def country_by_name_error_message
-        puts "I'm sorry I'm having trouble understanding your response."
-        puts "You may want to use (option 1) the list of countries to choose from as an alternative."
+        puts "I'm sorry I'm having trouble understanding your response!"
+        puts "You may want to select option 1 to see the list of countries to choose from as an alternative."
         puts "Would you like to continue?"
-        continue
-    end
-
-    def option_from_ordered_list
-        index = response.to_i - 1
-        CountryDataCliGem::Country.country_data(index)
         continue
     end
 
