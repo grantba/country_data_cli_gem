@@ -1,7 +1,7 @@
 class CountryDataCliGem::CLI
 
     def call
-        puts "Hi. Welcome to the Country Data CLI Gem."
+        puts "Hi. Welcome to the Country Data CLI Gem!"
         puts "Would you like to learn data about various countries around the world?"
         CountryDataCliGem::API.get_data
         continue
@@ -66,14 +66,32 @@ class CountryDataCliGem::CLI
 
     def country_by_name
         puts "Great. Please enter the name of the country you'd like to see more data about."
-        selection = response.downcase.strip
+        selection = response
         if CountryDataCliGem::Country.all.find {|country| country.name.downcase.strip == selection}
             index = CountryDataCliGem::Country.all.find_index {|country| country.name.downcase.strip == selection}
             CountryDataCliGem::Country.country_data(index)
             continue
         else 
-            invalid_response
+            @error_counter = 0 unless @error_counter == 1 || @error_counter == 2
+            counter
         end
+    end
+
+    def counter
+        @error_counter += 1
+        case @error_counter
+        when (1..2)
+            invalid_response
+        when (3)
+            country_by_name_error_message
+        end
+    end
+
+    def country_by_name_error_message
+        puts "I'm sorry I'm having trouble understanding your response."
+        puts "You may want to use (option 1) the list of countries to choose from as an alternative."
+        puts "Would you like to continue?"
+        continue
     end
 
     def option_from_ordered_list
