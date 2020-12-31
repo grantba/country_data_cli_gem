@@ -5,7 +5,5 @@ gem 'pry'
 gem 'json'
 gem 'rest-client'
 gem 'open-uri'
-gem 'colorize', '~> 0.8.1'
+gem 'colorize'
 gem 'require_all'
-
-

@@ -19,39 +19,47 @@ class CountryDataCliGem::Country
     end
 
     def self.name(index)
-        puts "Name: #{self.all[index].name}"
+        puts "Name: #{self.all[index].name}".underline
     end
 
     def self.capital(index)
         if self.all[index].capital.empty?
-            puts "Capital: This country does not have a specified capital."
+            print "Capital: "
+            puts "This country does not have a specified capital.".colorize(:light_blue)
         else
-            puts "Capital: #{self.all[index].capital}"
+            print "Capital: "
+            puts "#{self.all[index].capital}".colorize(:light_blue)
         end
     end
 
     def self.region(index)
         if self.all[index].region.empty?
-            puts "Region: This country does not have a specified region."
+            print "Region: "
+            puts "This country does not have a specified region.".colorize(:light_blue)
         else
-            puts "Region: #{self.all[index].region}"
+            print "Region: "
+            puts "#{self.all[index].region}".colorize(:light_blue)
         end
     end
 
     def self.population(index)
-        population = self.all[index].population
-        puts "Population: #{population.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}"
+        population_conversion = self.all[index].population
+        print "Population: "
+        puts "#{population_conversion.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}".colorize(:light_blue)
     end
 
     def self.timezones(index)
-        puts "Timezone(s): #{self.all[index].timezones.join(", ")}"
+        print "Timezone(s): "
+        puts "#{self.all[index].timezones.join(", ")}".colorize(:light_blue)
     end
 
     def self.borders(index)
         if self.all[index].borders.empty?
-            puts "Border(s): This country has no borders and is surrounded by water. Therefore, it is an island."
+            print "Border(s): "
+            puts "This country has no borders and is surrounded by water. Therefore, it is an island.".colorize(:light_blue)
         else
-            puts "Border(s): #{self.all[index].borders.join(", ")}"
+            print "Border(s): "
+            puts "#{self.all[index].borders.join(", ")}".colorize(:light_blue)
         end
     end
     
@@ -60,7 +68,8 @@ class CountryDataCliGem::Country
         self.all[index].currencies.each do |hash|
             arr << hash["name"] unless hash["name"] == nil
         end
-        puts "Currency/currencies: #{arr.join(", ")}"
+        print "Currency/currencies: "
+        puts "#{arr.join(", ")}".colorize(:light_blue)
     end
 
     def self.languages(index)
@@ -68,23 +77,26 @@ class CountryDataCliGem::Country
         self.all[index].languages.each do |hash|
             arr << hash["name"] unless hash["name"] == nil
         end
-        puts "Language(s): #{arr.join(", ")}"
+        print "Language(s): "
+        puts "#{arr.join(", ")}".colorize(:light_blue)
     end
 
     def self.flag(index)
-        puts "Flag: #{self.all[index].flag}"
+        print "Flag: " 
+        puts "#{self.all[index].flag}".colorize(:light_blue)
     end
 
     def self.country_data(index)
+        puts ""
         name(index)
         capital(index)
-        region(index)
         population(index)
         timezones(index)
         borders(index)
         currencies(index)
         languages(index)
         flag(index)
+        puts ""
         puts "I hope you found that interesting! Would you like to learn more?"
     end
 

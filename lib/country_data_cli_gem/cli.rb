@@ -1,14 +1,18 @@
 class CountryDataCliGem::CLI
 
     def call
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         puts "Hi. Welcome to the Country Data CLI Gem!"
         puts "Would you like to learn data about various countries around the world?"
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        puts ""
         CountryDataCliGem::API.get_data
         continue
     end
 
     def continue
         puts "Type 'y' to continue or 'exit' to leave the program."
+        puts ""
         menu
     end
 
@@ -29,10 +33,15 @@ class CountryDataCliGem::CLI
     end
 
     def user_options
+        puts ""
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         puts "Great! Please make a selection from the list below."
+        puts ""
         puts "Type '1' if you would like to see a list of countries to choose from."
         puts "Type '2' if you would like a random country chosen for you."
         puts "Type '3' if you would like to type in the name of the country you would like more information about."
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        puts ""
 
         selection = response
 
@@ -51,10 +60,13 @@ class CountryDataCliGem::CLI
     end
 
     def ordered_list
+        puts ""
         CountryDataCliGem::Country.all.each.with_index(1) do |country, index|
             puts "#{index}. #{country.name}"
         end
+        puts ""
         puts "Please type the number of the country you'd like to see more data about."
+        puts ""
         option_from_ordered_list
     end
 
@@ -71,10 +83,12 @@ class CountryDataCliGem::CLI
     end
 
     def country_by_name
+        puts ""
         puts "Please enter the name of the country you'd like to see more data about."
+        puts ""
         selection = response
-        if CountryDataCliGem::Country.all.find {|country| country.name.downcase.strip == selection}
-            index = CountryDataCliGem::Country.all.find_index {|country| country.name.downcase.strip == selection}
+        #CountryDataCliGem::Country.all.find {|country| country.name.strip.downcase == selection}
+        if index = CountryDataCliGem::Country.all.find_index {|country| country.name.strip.downcase == selection}
             CountryDataCliGem::Country.country_data(index)
             continue
         else 
@@ -94,19 +108,24 @@ class CountryDataCliGem::CLI
     end
 
     def country_by_name_error_message
+        puts ""
         puts "I'm sorry I'm having trouble understanding your response!"
         puts "You may want to select option 1 to see the list of countries to choose from as an alternative."
-        puts "Would you like to continue?"
+        puts ""
         continue
     end
 
     def invalid_response
+        puts ""
         puts "I'm sorry, I didn't quite understand your response."
         continue
     end
 
     def exit_message
+        puts ""
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         puts "Thanks for checking out the Country Data CLI Gem. Have a great day. Good-bye!"
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     end
 
 end
