@@ -40,6 +40,7 @@ class CountryDataCliGem::CLI
         puts "Type '1' if you would like to see a list of countries to choose from."
         puts "Type '2' if you would like a random country chosen for you."
         puts "Type '3' if you would like to type in the name of the country you would like more information about."
+        puts "Type '4' if you would like to learn interesting facts about all of the countries around the world."
         puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         puts ""
 
@@ -52,6 +53,8 @@ class CountryDataCliGem::CLI
             random_selection
         when "3"
             country_by_name
+        when "4"
+            interesting_facts
         when "exit"
             exit_message
         else
@@ -119,6 +122,11 @@ class CountryDataCliGem::CLI
         puts "I'm sorry I'm having trouble understanding your response!"
         puts "You may want to select option 1 to see the list of countries to choose from as an alternative."
         puts ""
+        continue
+    end
+    
+    def interesting_facts
+        CountryDataCliGem::Country.interesting_facts
         continue
     end
 
