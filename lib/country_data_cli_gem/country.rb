@@ -86,6 +86,9 @@ class CountryDataCliGem::Country
         puts "#{self.all[index].flag}".colorize(:light_blue)
     end
 
+    #Interesting facts: 
+    #:name, :capital, :region, :population, :timezones, :borders, :currencies, :languages, :flag
+
     def self.country_data(index)
         puts ""
         name(index)

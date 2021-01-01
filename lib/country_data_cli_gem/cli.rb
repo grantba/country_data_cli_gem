@@ -1,6 +1,6 @@
 class CountryDataCliGem::CLI
 
-    def call
+    def call      
         puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         puts "Hi. Welcome to the Country Data CLI Gem!"
         puts "Would you like to learn data about various countries around the world?"
@@ -65,15 +65,23 @@ class CountryDataCliGem::CLI
             puts "#{index}. #{country.name}"
         end
         puts ""
-        puts "Please type the number of the country you'd like to see more data about."
+        puts "Type the number of the country you'd like to see more data about."
         puts ""
         option_from_ordered_list
     end
 
     def option_from_ordered_list
         index = response.to_i - 1
-        CountryDataCliGem::Country.country_data(index)
-        continue
+        if index >= 0 && index <= CountryDataCliGem::Country.all.length - 1
+            CountryDataCliGem::Country.country_data(index)
+            continue
+        else
+            puts ""
+            puts "That was an invalid response. Please select a number from the list."
+            puts ""
+            sleep 5
+            ordered_list
+        end
     end
 
     def random_selection
@@ -86,18 +94,17 @@ class CountryDataCliGem::CLI
         puts ""
         puts "Please enter the name of the country you'd like to see more data about."
         puts ""
-        selection = response
-        #CountryDataCliGem::Country.all.find {|country| country.name.strip.downcase == selection}
-        if index = CountryDataCliGem::Country.all.find_index {|country| country.name.strip.downcase == selection}
+        country_selection = response
+        if index = CountryDataCliGem::Country.all.find_index {|country| country.name.strip.downcase == country_selection}
             CountryDataCliGem::Country.country_data(index)
             continue
         else 
             @error_counter = 0 unless @error_counter == 1 || @error_counter == 2
-            counter
+            error_counter
         end
     end
 
-    def counter
+    def error_counter
         @error_counter += 1
         case @error_counter
         when (1..2)

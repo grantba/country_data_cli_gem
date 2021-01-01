@@ -1,91 +1,7 @@
-/.bundle/
-/.yardoc
-/_yardoc/
-/coverage/
-/doc/
-/pkg/
-/spec/reports/
-/tmp/
-
 
 require 'net/http'
 require 'open-uri'
 require 'json'
-
-
-class CountryInfo
-
-    URL = "https://restcountries.eu/rest/v2/all"
-    @@ll = []
-    
-    def self.all
-        @@all
-    end
-
-    def get_info
-        uri = URI.parse(URL)
-        response = Net::HTTP.get_response(uri)
-        response.body
-    end
-
-    def create_country_data
-        countries = JSON.parse(self.get_info)
-            CountryInfo.new.tap do |country|
-            countries.each do |k, v|
-                country.send("#{k}=", v)
-                @@all << self
-            end
-        end
-    end
-
-    info = CountryInfo.new
-    info.create_country_data
-    
-end
-
-
-countries.new.tap do |country|
-puts country.create_country_data
-info = CountryInfo.new.get_info
-
-  def create_country_data(data)
-    countries = JSON.parse(data)
-      Country.new.create do |country|
-        countries.each do |k, v|
-          country.send("#{k}=", v)
-      end
-    end
-  end
-
-end
-
-class Country
-
-  @@all = []
-  attr_accessor 
-
-  def create
-    @@all << self
-  end
-
-  def self.all
-    @@all
-  end
-
-end
-
-info = CountryInfo.new.parse
-
-
-    # return an array of hashes  
-    def self.print_languages(index)
-        self.all[index].languages |hash|
-            hash[:name]
-        end 
-    end 
-#puts "Currency/Currencies: #{self.all[index].currencies[0]["name"]}"
-#puts "Language(s): #{self.all[index].languages[0]["name"]}"
-#puts "Border(s): #{self.all[index].borders.join(", ")}" unless self.all[index].borders.empty?
 
 require 'launchy'
 require 'watir'
@@ -107,3 +23,17 @@ gem 'webdrivers'
         # Click here to open the link!
         # <a>
     end
+
+page = "https://freevectormaps.com/world-maps/WRLD-EPS-01-0015?ref=trends"
+html = Nokogiri::HTML(open(page))
+src  = html.at('div.flag img')['src']
+File.open("foo.png", "wb") do |f|
+f.write(open(src).read)
+end
+
+  def open_in_browser
+    system("open '#{url}'")
+  end
+
+  #CountryDataCliGem::Country.all.find {|country| country.name.strip.downcase == selection}
+
