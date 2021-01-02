@@ -126,7 +126,7 @@ class CountryDataCliGem::CLI
     end
     
     def interesting_facts
-        CountryDataCliGem::Country.interesting_facts
+        CountryDataCliGem::Country.interesting_facts_all_countries
         continue
     end
 

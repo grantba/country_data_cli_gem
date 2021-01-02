@@ -36,4 +36,16 @@ end
   end
 
   #CountryDataCliGem::Country.all.find {|country| country.name.strip.downcase == selection}
+        
+        puts "There are a total of #{total_timezones_count.count} different timezones around the world."
+        puts "They are:"
+        total_timezones_count.each.with_index(1) do |timezone, index|
+            puts "#{index}. #{timezone}" unless timezone.empty?
+        end
+
+                puts "They are:"
+        most_borders.last.borders.each.with_index(1) do |border, index|
+            puts "#{index}. #{border}"
+        end
+
 

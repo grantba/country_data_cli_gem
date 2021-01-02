@@ -64,21 +64,21 @@ class CountryDataCliGem::Country
     end
     
     def self.currencies(index)
-        arr = []
+        currency_array = []
         self.all[index].currencies.each do |hash|
-            arr << hash["name"] unless hash["name"] == nil
+            currency_array << hash["name"] unless hash["name"] == nil
         end
         print "Currency/currencies: "
-        puts "#{arr.join(", ")}".colorize(:light_blue)
+        puts "#{currency_array.join(", ")}".colorize(:light_blue)
     end
 
     def self.languages(index)
-        arr = []
+        language_array = []
         self.all[index].languages.each do |hash|
-            arr << hash["name"] unless hash["name"] == nil
+            language_array << hash["name"] unless hash["name"] == nil
         end
         print "Language(s): "
-        puts "#{arr.join(", ")}".colorize(:light_blue)
+        puts "#{language_array.join(", ")}".colorize(:light_blue)
     end
 
     def self.flag(index)
@@ -95,7 +95,8 @@ class CountryDataCliGem::Country
         total_capitals = self.all.select {|country| country.capital.empty?}
         puts "There are #{total_capitals.count} countries in the world that have no capital."
         puts "They are:"
-        total_capitals.each.with_index(1) do |country, index|
+        total_capitals_sorted = total_capitals.sort {|country1, country2| country1.name <=> country2.name}
+        total_capitals_sorted.each.with_index(1) do |country, index|
             puts "#{index}. #{country.name}"
         end
         puts ""
@@ -106,7 +107,8 @@ class CountryDataCliGem::Country
         total_regions_count = total_regions.select {|country| country.region unless country.region.empty?}
         puts "There are a total of #{total_regions_count.count} different regions around the world."
         puts "They are:"
-        total_regions.each.with_index(1) do |country, index|
+        total_regions_sorted = total_regions_count.sort {|country1, country2| country1.region <=> country2.region}
+        total_regions_sorted.each.with_index(1) do |country, index|
             puts "#{index}. #{country.region}" unless country.region.empty?
         end
         puts ""
@@ -152,21 +154,58 @@ class CountryDataCliGem::Country
             end
         end
         total_timezones_count = total_timezones.flatten.uniq.sort
-        puts "There are a total of #{total_timezones_count.count} different timezones around the world."
-        puts "They are:"
-        total_timezones_count.each.with_index(1) do |timezone, index|
-            puts "#{index}. #{timezone}" unless timezone.empty?
-        end
+        most_timezones = self.all.sort {|country1, country2| country1.timezones.size <=> country2.timezones.size}
+        puts "The country that has the most time zones is #{most_timezones.last.name}."
+        puts "#{most_timezones.last.name} has a total of #{most_timezones.last.timezones.count} different timezones."
         puts ""    
     end
-    #Interesting facts: 
-    #:borders, :currencies, :languages, :flag
 
-    def self.interesting_facts
+    def self.total_borders
+        no_borders = self.all.select {|country| country.borders.empty?}
+        puts "There are #{no_borders.count} countries that have no borders."
+        most_borders = self.all.sort {|country1, country2| country1.borders.size <=> country2.borders.size}
+        puts "The country that has the most borders is #{most_borders.last.name}"
+        puts "#{most_borders.last.name} has a total of #{most_borders.last.borders.count} borders."
         puts ""
-        puts "~~~~~~~~~~~~~"
-        puts "Did you know?"
-        puts "~~~~~~~~~~~~~"
+    end
+
+    def self.total_currencies
+        most_currencies = self.all.sort {|country1, country2| country1.currencies.size <=> country2.currencies.size}
+        total_currencies_array = []
+        most_currencies.last.currencies.each do |hash|
+            total_currencies_array << hash["name"] unless hash["name"] == nil
+        end
+        puts "The country that has the most currencies is #{most_currencies.last.name}."
+        puts "#{most_currencies.last.name} has a total of #{total_currencies_array.count} currencies."
+        puts "They are:"
+        sorted_array = total_currencies_array.sort
+        sorted_array.each.with_index(1) do |currency, index| 
+            puts "#{index}. #{currency}"
+        end
+        puts ""
+    end
+
+    def self.total_languages
+        most_languages = self.all.sort {|country1, country2| country1.languages.size <=> country2.languages.size}
+        total_languages_array = []
+        most_languages.last.languages.each do |hash|
+            total_languages_array << hash["name"] unless hash["name"] == nil
+        end
+        puts "The country that speaks the most languages is #{most_languages.last.name}."
+        puts "#{most_languages.last.name} speaks #{total_languages_array.count} different languages."
+        puts "They are:"
+        sorted_array = total_languages_array.sort
+        sorted_array.each.with_index(1) do |language, index| 
+            puts "#{index}. #{language}"
+        end
+        puts ""
+    end
+
+    def self.interesting_facts_all_countries
+        puts ""
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
+        puts "                       Did you know?".colorize(:light_blue)
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
         puts ""
         total_countries
         total_country_capitals
@@ -175,6 +214,11 @@ class CountryDataCliGem::Country
         least_populated_country
         most_populated_country
         total_country_timezones
+        total_borders
+        total_currencies
+        total_languages
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
+        puts ""
         puts "I hope you found that interesting! Would you like to learn more?"
     end
 
