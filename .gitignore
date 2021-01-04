@@ -48,4 +48,18 @@ end
             puts "#{index}. #{border}"
         end
 
+                no_borders = self.all.select {|country| country.borders.empty?}
+        puts "There are #{no_borders.count} countries that have no borders."
+
+    def self.total_country_regions
+        total_regions = self.all.select.uniq {|total_regions| total_regions.region} 
+        total_regions_count = total_regions.select {|country| country.region unless country.region.empty?}
+        puts "There are a total of #{total_regions_count.count} different regions around the world."
+        puts "They are:"
+        total_regions_sorted = total_regions_count.sort {|country1, country2| country1.region <=> country2.region}
+        total_regions_sorted.each.with_index(1) do |country, index|
+            puts "#{index}. #{country.region}" unless country.region.empty?
+        end
+        puts ""
+    end
 

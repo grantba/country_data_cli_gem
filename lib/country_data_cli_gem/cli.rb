@@ -1,13 +1,44 @@
 class CountryDataCliGem::CLI
 
     def call      
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        puts "Hi. Welcome to the Country Data CLI Gem!"
-        puts "Would you like to learn data about various countries around the world?"
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        system("clear")
+        welcome_logo                    
+        puts ""
+        puts ""
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        puts "                       Would you like to learn data about various countries around the world?"                            
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         puts ""
         CountryDataCliGem::API.get_data
+        sleep 3
         continue
+    end
+
+    def welcome_logo
+        puts "               
+                           ██     ██ ███████ ██       ██████  ██████  ███    ███ ███████                          
+                           ██     ██ ██      ██      ██      ██    ██ ████  ████ ██                               
+                           ██  █  ██ █████   ██      ██      ██    ██ ██ ████ ██ █████                            
+                           ██ ███ ██ ██      ██      ██      ██    ██ ██  ██  ██ ██                               
+                            ███ ███  ███████ ███████  ██████  ██████  ██      ██ ███████                          
+                                                                                               
+                                   ████████  ██████      ████████ ██   ██ ███████                                 
+                                      ██    ██    ██        ██    ██   ██ ██                                      
+                                      ██    ██    ██        ██    ███████ █████                                   
+                                      ██    ██    ██        ██    ██   ██ ██                                      
+                                      ██     ██████         ██    ██   ██ ███████                                 
+                                                                                               
+         ██████  ██████  ██    ██ ███    ██ ████████ ██████  ██    ██     ██████   █████  ████████  █████      
+        ██      ██    ██ ██    ██ ████   ██    ██    ██   ██  ██  ██      ██   ██ ██   ██    ██    ██   ██     
+        ██      ██    ██ ██    ██ ██ ██  ██    ██    ██████    ████       ██   ██ ███████    ██    ███████     
+        ██      ██    ██ ██    ██ ██  ██ ██    ██    ██   ██    ██        ██   ██ ██   ██    ██    ██   ██     
+         ██████  ██████   ██████  ██   ████    ██    ██   ██    ██        ██████  ██   ██    ██    ██   ██     
+                                                                                                      
+                                 ██████ ██      ██      ██████  ███████ ███    ███ ██                              
+                                ██      ██      ██     ██       ██      ████  ████ ██                              
+                                ██      ██      ██     ██   ███ █████   ██ ████ ██ ██                              
+                                ██      ██      ██     ██    ██ ██      ██  ██  ██                                 
+                                 ██████ ███████ ██      ██████  ███████ ██      ██ ██ ".colorize(:light_blue)                                                                                                                                            
     end
 
     def continue
@@ -54,7 +85,7 @@ class CountryDataCliGem::CLI
         when "3"
             country_by_name
         when "4"
-            interesting_facts
+            interesting_facts_all_countries
         when "exit"
             exit_message
         else
@@ -76,20 +107,20 @@ class CountryDataCliGem::CLI
     def option_from_ordered_list
         index = response.to_i - 1
         if index >= 0 && index <= CountryDataCliGem::Country.all.length - 1
-            CountryDataCliGem::Country.country_data(index)
+            print_country_data(index)
             continue
         else
             puts ""
             puts "That was an invalid response. Please select a number from the list."
             puts ""
-            sleep 5
+            sleep 3
             ordered_list
         end
     end
 
     def random_selection
         index = rand(0..249)
-        CountryDataCliGem::Country.country_data(index)
+        print_country_data(index)
         continue
     end
 
@@ -99,7 +130,7 @@ class CountryDataCliGem::CLI
         puts ""
         country_selection = response
         if index = CountryDataCliGem::Country.all.find_index {|country| country.name.strip.downcase == country_selection}
-            CountryDataCliGem::Country.country_data(index)
+            print_country_data(index)
             continue
         else 
             @error_counter = 0 unless @error_counter == 1 || @error_counter == 2
@@ -124,9 +155,40 @@ class CountryDataCliGem::CLI
         puts ""
         continue
     end
+
+    def print_country_data(index)
+        puts ""
+        CountryDataCliGem::Country.name(index)
+        CountryDataCliGem::Country.capital(index)
+        CountryDataCliGem::Country.region(index)
+        CountryDataCliGem::Country.population(index)
+        CountryDataCliGem::Country.timezones(index)
+        CountryDataCliGem::Country.borders(index)
+        CountryDataCliGem::Country.currencies(index)
+        CountryDataCliGem::Country.languages(index)
+        CountryDataCliGem::Country.flag(index)
+        puts ""
+        puts "I hope you found that interesting! Would you like to learn more?"
+    end
     
-    def interesting_facts
-        CountryDataCliGem::Country.interesting_facts_all_countries
+    def interesting_facts_all_countries
+        puts ""
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
+        puts "                       Did you know?".colorize(:light_blue)
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
+        puts ""
+        CountryDataCliGem::Country.total_countries
+        CountryDataCliGem::Country.total_country_capitals
+        CountryDataCliGem::Country.total_population
+        CountryDataCliGem::Country.least_populated_country
+        CountryDataCliGem::Country.most_populated_country
+        CountryDataCliGem::Country.total_country_timezones
+        CountryDataCliGem::Country.total_borders
+        CountryDataCliGem::Country.total_currencies
+        CountryDataCliGem::Country.total_languages
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
+        puts ""
+        puts "I hope you found that interesting! Would you like to learn more?"
         continue
     end
 

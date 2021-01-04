@@ -101,18 +101,6 @@ class CountryDataCliGem::Country
         end
         puts ""
     end
-    
-    def self.total_country_regions
-        total_regions = self.all.select.uniq {|total_regions| total_regions.region} 
-        total_regions_count = total_regions.select {|country| country.region unless country.region.empty?}
-        puts "There are a total of #{total_regions_count.count} different regions around the world."
-        puts "They are:"
-        total_regions_sorted = total_regions_count.sort {|country1, country2| country1.region <=> country2.region}
-        total_regions_sorted.each.with_index(1) do |country, index|
-            puts "#{index}. #{country.region}" unless country.region.empty?
-        end
-        puts ""
-    end
 
     def self.total_population
         total_population_count = self.all.sum {|country| country.population.to_i}
@@ -161,8 +149,6 @@ class CountryDataCliGem::Country
     end
 
     def self.total_borders
-        no_borders = self.all.select {|country| country.borders.empty?}
-        puts "There are #{no_borders.count} countries that have no borders."
         most_borders = self.all.sort {|country1, country2| country1.borders.size <=> country2.borders.size}
         puts "The country that has the most borders is #{most_borders.last.name}"
         puts "#{most_borders.last.name} has a total of #{most_borders.last.borders.count} borders."
@@ -176,7 +162,7 @@ class CountryDataCliGem::Country
             total_currencies_array << hash["name"] unless hash["name"] == nil
         end
         puts "The country that has the most currencies is #{most_currencies.last.name}."
-        puts "#{most_currencies.last.name} has a total of #{total_currencies_array.count} currencies."
+        puts "#{most_currencies.last.name} has a total of #{total_currencies_array.count} different currencies."
         puts "They are:"
         sorted_array = total_currencies_array.sort
         sorted_array.each.with_index(1) do |currency, index| 
@@ -199,41 +185,6 @@ class CountryDataCliGem::Country
             puts "#{index}. #{language}"
         end
         puts ""
-    end
-
-    def self.interesting_facts_all_countries
-        puts ""
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
-        puts "                       Did you know?".colorize(:light_blue)
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
-        puts ""
-        total_countries
-        total_country_capitals
-        total_country_regions
-        total_population
-        least_populated_country
-        most_populated_country
-        total_country_timezones
-        total_borders
-        total_currencies
-        total_languages
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
-        puts ""
-        puts "I hope you found that interesting! Would you like to learn more?"
-    end
-
-    def self.country_data(index)
-        puts ""
-        name(index)
-        capital(index)
-        population(index)
-        timezones(index)
-        borders(index)
-        currencies(index)
-        languages(index)
-        flag(index)
-        puts ""
-        puts "I hope you found that interesting! Would you like to learn more?"
     end
 
 end
