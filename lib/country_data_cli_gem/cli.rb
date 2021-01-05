@@ -178,11 +178,11 @@ class CountryDataCliGem::CLI
         puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
         puts ""
         CountryDataCliGem::Country.total_countries
-        CountryDataCliGem::Country.total_country_capitals
+        CountryDataCliGem::Country.total_capitals
         CountryDataCliGem::Country.total_population
         CountryDataCliGem::Country.least_populated_country
         CountryDataCliGem::Country.most_populated_country
-        CountryDataCliGem::Country.total_country_timezones
+        CountryDataCliGem::Country.total_timezones
         CountryDataCliGem::Country.total_borders
         CountryDataCliGem::Country.total_currencies
         CountryDataCliGem::Country.total_languages

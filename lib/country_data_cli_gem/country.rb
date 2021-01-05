@@ -82,8 +82,10 @@ class CountryDataCliGem::Country
     end
 
     def self.flag(index)
-        print "Flag: " 
+        print "Flag: "
         puts "#{self.all[index].flag}".colorize(:light_blue)
+        flag = self.all[index].flag
+        system("xdg-open #{flag}")
     end
 
     def self.total_countries
@@ -91,7 +93,7 @@ class CountryDataCliGem::Country
         puts ""
     end
 
-    def self.total_country_capitals
+    def self.total_capitals
         total_capitals = self.all.select {|country| country.capital.empty?}
         puts "There are #{total_capitals.count} countries in the world that have no capital."
         puts "They are:"
@@ -127,7 +129,7 @@ class CountryDataCliGem::Country
         puts ""
     end
 
-    def self.total_country_timezones
+    def self.total_timezones
         total_timezones = []
         self.all.each do |country|
             total_timezones << country.timezones if country.timezones.size == 1
