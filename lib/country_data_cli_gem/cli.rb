@@ -5,9 +5,9 @@ class CountryDataCliGem::CLI
         welcome_logo                    
         puts ""
         puts ""
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        puts "                       Would you like to learn data about various countries around the world?"                            
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        puts "                        Would you like to learn data about various countries around the world?"                            
+        puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         puts ""
         CountryDataCliGem::API.get_data
         sleep 3
@@ -42,12 +42,13 @@ class CountryDataCliGem::CLI
     end
 
     def continue
-        puts "Type 'y' to continue or 'exit' to leave the program."
+        puts " Type 'y' to continue or 'exit' to leave the program."
         puts ""
         menu
     end
 
     def response
+        print " " 
         gets.strip.downcase
     end
 
@@ -65,14 +66,14 @@ class CountryDataCliGem::CLI
 
     def user_options
         puts ""
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        puts "Great! Please make a selection from the list below."
+        puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        puts " Great! Please make a selection from the list below."
         puts ""
-        puts "Type '1' if you would like to see a list of countries to choose from."
-        puts "Type '2' if you would like a random country chosen for you."
-        puts "Type '3' if you would like to type in the name of the country you would like more information about."
-        puts "Type '4' if you would like to learn interesting facts about all of the countries around the world."
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        puts " Type '1' if you would like to see a list of countries to choose from."
+        puts " Type '2' if you would like a random country chosen for you."
+        puts " Type '3' if you would like to type in the name of the country you would like more information about."
+        puts " Type '4' if you would like to learn interesting facts about all of the countries around the world."
+        puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         puts ""
 
         selection = response
@@ -96,10 +97,10 @@ class CountryDataCliGem::CLI
     def ordered_list
         puts ""
         CountryDataCliGem::Country.all.each.with_index(1) do |country, index|
-            puts "#{index}. #{country.name}"
+            puts " #{index}. #{country.name}"
         end
         puts ""
-        puts "Type the number of the country you'd like to see more data about."
+        puts " Type the number of the country you'd like to see more data about."
         puts ""
         option_from_ordered_list
     end
@@ -111,7 +112,7 @@ class CountryDataCliGem::CLI
             continue
         else
             puts ""
-            puts "That was an invalid response. Please select a number from the list."
+            puts " That was an invalid response. Please select a number from the list."
             puts ""
             sleep 3
             ordered_list
@@ -126,7 +127,7 @@ class CountryDataCliGem::CLI
 
     def country_by_name
         puts ""
-        puts "Please enter the name of the country you'd like to see more data about."
+        puts " Please enter the name of the country you'd like to see more data about."
         puts ""
         country_selection = response
         if index = CountryDataCliGem::Country.all.find_index {|country| country.name.strip.downcase == country_selection}
@@ -150,8 +151,8 @@ class CountryDataCliGem::CLI
 
     def country_by_name_error_message
         puts ""
-        puts "I'm sorry I'm having trouble understanding your response!"
-        puts "You may want to select option 1 to see the list of countries to choose from as an alternative."
+        puts " I'm sorry I'm having trouble understanding your response!"
+        puts " You may want to select option 1 to see the list of countries to choose from as an alternative."
         puts ""
         continue
     end
@@ -168,14 +169,14 @@ class CountryDataCliGem::CLI
         CountryDataCliGem::Country.languages(index)
         CountryDataCliGem::Country.flag(index)
         puts ""
-        puts "I hope you found that interesting! Would you like to learn more?"
+        puts " I hope you found that interesting! Would you like to learn more?"
     end
     
     def interesting_facts_all_countries
         puts ""
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
-        puts "                       Did you know?".colorize(:light_blue)
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
+        puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
+        puts "                                                   Did you know?".colorize(:light_blue)                                             
+        puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
         puts ""
         CountryDataCliGem::Country.total_countries
         CountryDataCliGem::Country.total_capitals
@@ -186,23 +187,23 @@ class CountryDataCliGem::CLI
         CountryDataCliGem::Country.total_borders
         CountryDataCliGem::Country.total_currencies
         CountryDataCliGem::Country.total_languages
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
+        puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~".colorize(:light_blue)
         puts ""
-        puts "I hope you found that interesting! Would you like to learn more?"
+        puts " I hope you found that interesting! Would you like to learn more?"
         continue
     end
 
     def invalid_response
         puts ""
-        puts "I'm sorry, I didn't quite understand your response."
+        puts " I'm sorry, I didn't quite understand your response."
         continue
     end
 
     def exit_message
         puts ""
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        puts "Thanks for checking out the Country Data CLI Gem. Have a great day. Good-bye!"
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        puts "                   Thanks for checking out the Country Data CLI Gem. Have a great day. Good-bye!"                             
+        puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     end
 
 end
