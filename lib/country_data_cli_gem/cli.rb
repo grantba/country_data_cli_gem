@@ -130,13 +130,32 @@ class CountryDataCliGem::CLI
         puts " Please enter the name of the country you'd like to see more data about."
         puts ""
         country_selection = response
-        if index = CountryDataCliGem::Country.all.find_index {|country| country.name.strip.downcase == country_selection}
-            print_country_data(index)
+        countries = CountryDataCliGem::Country.all.select {|country| country.name.strip.downcase.match(/#{country_selection}/)}
+        if countries.count == 1
+            country = countries[0].name
+            country_by_name_to_index(country)
             continue
-        else 
+        elsif countries.count < 1
             @error_counter = 0 unless @error_counter == 1 || @error_counter == 2
             error_counter
+        else
+            puts ""
+            puts " Which country is the one you were looking for?"
+            puts " Please type the number of the correct country."
+            puts ""
+            countries.each.with_index(1) do |country, index|
+                puts " #{index}. #{country.name}"
+            end
+            puts ""
+            country = countries[response.to_i - 1].name
+            country_by_name_to_index(country)
+            continue
         end
+    end
+
+    def country_by_name_to_index(country)
+        index = CountryDataCliGem::Country.all.find_index {|countries| countries.name == country}
+        print_country_data(index.to_i)
     end
 
     def error_counter

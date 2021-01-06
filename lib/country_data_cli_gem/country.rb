@@ -18,6 +18,10 @@ class CountryDataCliGem::Country
         @@all
     end
 
+    def find_by_name(name)
+        
+    end
+
     def self.name(index)
         puts " Name: #{self.all[index].name}".underline
     end
@@ -82,9 +86,10 @@ class CountryDataCliGem::Country
     end
 
     def self.flag(index)
-        print " Flag: "
-        puts "#{self.all[index].flag}".colorize(:light_blue)
         flag = self.all[index].flag
+        print " Flag: "
+        puts "#{flag}".colorize(:light_blue)
+        sleep 3
         system("xdg-open #{flag}")
     end
 
