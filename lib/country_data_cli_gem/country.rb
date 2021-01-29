@@ -101,6 +101,8 @@ class CountryDataCliGem::Country
             system "xdg-open #{flag}"
         else
             puts ""
+            puts " Unfortunately, I was unable to open the flag url (#{flag.colorize(:light_blue)}) in your browser for you."
+            puts " Please copy and paste the url in your browser manually if you'd like to see the country's flag."
         end
     end
 
