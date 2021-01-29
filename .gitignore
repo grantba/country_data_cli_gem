@@ -1,42 +1,4 @@
-
-require 'net/http'
-require 'open-uri'
-require 'json'
-
-require 'launchy'
-require 'watir'
-gem 'watir', '~> 6.17'
-gem 'webdrivers'
-    def self.flag(index)
-        #chromedriver_path = File.join(File.absolute_path('../..', File.dirname(__FILE__)),"browsers","chromedriver.exe")
-        File.join(File.absolute_path('../..', File.dirname(__FILE__)),"browsers","chromedriver.exe")
-        Selenium::WebDriver::Chrome::Service.driver_path = File.join(File.absolute_path('../..', File.dirname(__FILE__)),"browsers","chromedriver.exe")
-        b = Watir::Browser.new :chrome, driver_path: chromedriver_path
-        #b = Watir::Browser.new :chrome
-        b.goto(self.all[index].flag)
-        puts "Flag: "
-        #b.goto(https://chromedriver.com/index.html)
-        #b.link(text: self.all[index].flag).click
-        b.close
-        # puts "Flag: " 
-        # <a href= "#{self.all[index].flag}" >
-        # Click here to open the link!
-        # <a>
-    end
-
-page = "https://freevectormaps.com/world-maps/WRLD-EPS-01-0015?ref=trends"
-html = Nokogiri::HTML(open(page))
-src  = html.at('div.flag img')['src']
-File.open("foo.png", "wb") do |f|
-f.write(open(src).read)
-end
-
-  def open_in_browser
-    system("open '#{url}'")
-  end
-
-  #CountryDataCliGem::Country.all.find {|country| country.name.strip.downcase == selection}
-        
+       
         puts "There are a total of #{total_timezones_count.count} different timezones around the world."
         puts "They are:"
         total_timezones_count.each.with_index(1) do |timezone, index|
@@ -63,5 +25,33 @@ end
         puts ""
     end
 
+    most_populated = self.all.sort {|country1, country2| country1.population.to_i <=> country2.population.to_i}
 
+        total_timezones = []
+        self.all.each do |country|
+            total_timezones << country.timezones if country.timezones.size == 1
+        end
 
+        self.all.each do |countries|
+            if countries.timezones.size > 1
+                    countries.each do |country|
+                    total_timezones << country.timezones
+                end 
+            else
+                break
+            end
+        end
+
+        total_timezones_count = total_timezones.flatten.uniq.sort
+
+        sum = 0
+        self.all.each { |a| sum += a.population.to_i }
+        puts sum
+
+            def self.find_by_name(name)
+        self.all.find {|country| country.name == name}
+    end
+
+gem 'launchy'
+        # system("xdg-open #{flag}")
+        # Launchy.open(flag)

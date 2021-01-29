@@ -9,7 +9,9 @@ class CountryDataCliGem::CLI
         puts "                        Would you like to learn data about various countries around the world?"                            
         puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         puts ""
+
         CountryDataCliGem::API.get_data
+        
         sleep 3
         continue
     end
@@ -72,7 +74,7 @@ class CountryDataCliGem::CLI
         puts " Type '1' if you would like to see a list of countries to choose from."
         puts " Type '2' if you would like a random country chosen for you."
         puts " Type '3' if you would like to type in the name of the country you would like more information about."
-        puts " Type '4' if you would like to learn interesting facts about all of the countries around the world."
+        puts " Type '4' if you would like to learn interesting facts about the countries around the world."
         puts " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         puts ""
 
@@ -99,6 +101,7 @@ class CountryDataCliGem::CLI
         CountryDataCliGem::Country.all.each.with_index(1) do |country, index|
             puts " #{index}. #{country.name}"
         end
+
         puts ""
         puts " Type the number of the country you'd like to see more data about."
         puts ""
@@ -107,6 +110,7 @@ class CountryDataCliGem::CLI
 
     def option_from_ordered_list
         index = response.to_i - 1
+
         if index >= 0 && index <= CountryDataCliGem::Country.all.length - 1
             print_country_data(index)
             continue
@@ -120,36 +124,28 @@ class CountryDataCliGem::CLI
     end
 
     def random_selection
-        index = rand(0..249)
+        index = rand(0..CountryDataCliGem::Country.all.length - 1)
         print_country_data(index)
         continue
     end
 
     def country_by_name
         puts ""
-        puts " Please enter the name of the country you'd like to see more data about."
+        puts " Type the name of the country you'd like to see more data about."
         puts ""
+
         country_selection = response
-        countries = CountryDataCliGem::Country.all.select {|country| country.name.strip.downcase.match(/#{country_selection}/)}
-        if countries.count == 1
-            country = countries[0].name
+        @countries = CountryDataCliGem::Country.all.select {|country| country.name.downcase.match(/#{country_selection}/)}
+        
+        if @countries.count == 1
+            country = @countries[0].name
             country_by_name_to_index(country)
             continue
-        elsif countries.count < 1
+        elsif @countries.count < 1
             @error_counter = 0 unless @error_counter == 1 || @error_counter == 2
             error_counter
         else
-            puts ""
-            puts " Which country is the one you were looking for?"
-            puts " Please type the number of the correct country."
-            puts ""
-            countries.each.with_index(1) do |country, index|
-                puts " #{index}. #{country.name}"
-            end
-            puts ""
-            country = countries[response.to_i - 1].name
-            country_by_name_to_index(country)
-            continue
+            display_multiple_countries
         end
     end
 
@@ -158,8 +154,38 @@ class CountryDataCliGem::CLI
         print_country_data(index.to_i)
     end
 
+    def display_multiple_countries
+        puts ""
+        puts " Which country is the one you were looking for?"
+        puts " Type the number of the country you'd like to see more data about."
+        puts ""
+
+        @countries.each.with_index(1) do |country, index|
+            puts " #{index}. #{country.name}"
+        end
+
+        puts ""
+        multiple_countries_selection
+    end
+
+    def multiple_countries_selection
+        index = response.to_i - 1
+
+        if index >= 0 && index <= @countries.length - 1
+            country = @countries[index].name
+            country_by_name_to_index(country)
+            continue
+        else
+            puts ""
+            puts " That was an invalid response. Please select a number from the list."
+            sleep 3
+            display_multiple_countries
+        end
+    end
+
     def error_counter
         @error_counter += 1
+
         case @error_counter
         when (1..2)
             invalid_response

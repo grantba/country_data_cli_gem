@@ -3,8 +3,8 @@ class CountryDataCliGem::Country
     attr_accessor :name, :capital, :region, :population, :timezones, :borders, :currencies, :languages, :flag
     @@all = []
 
-    def initialize(country_hash)
-        country_hash.each do |k, v|
+    def initialize(country)
+        country.each do |k, v|
             self.send("#{k}=", v) if self.respond_to?("#{k}=")
         end
         save
@@ -18,12 +18,9 @@ class CountryDataCliGem::Country
         @@all
     end
 
-    def find_by_name(name)
-        
-    end
-
     def self.name(index)
-        puts " Name: #{self.all[index].name}".underline
+        print " "
+        puts "Name: #{self.all[index].name}".underline
     end
 
     def self.capital(index)
@@ -48,6 +45,7 @@ class CountryDataCliGem::Country
 
     def self.population(index)
         population_conversion = self.all[index].population
+
         print " Population: "
         puts "#{population_conversion.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}".colorize(:light_blue)
     end
@@ -60,7 +58,7 @@ class CountryDataCliGem::Country
     def self.borders(index)
         if self.all[index].borders.empty?
             print " Border(s): "
-            puts "This country has no borders and is surrounded by water. Therefore, it is an island.".colorize(:light_blue)
+            puts "This country has no borders. It is surrounded by water.".colorize(:light_blue)
         else
             print " Border(s): "
             puts "#{self.all[index].borders.join(", ")}".colorize(:light_blue)
@@ -72,6 +70,7 @@ class CountryDataCliGem::Country
         self.all[index].currencies.each do |hash|
             currency_array << hash["name"] unless hash["name"] == nil
         end
+
         print " Currency/currencies: "
         puts "#{currency_array.join(", ")}".colorize(:light_blue)
     end
@@ -81,16 +80,28 @@ class CountryDataCliGem::Country
         self.all[index].languages.each do |hash|
             language_array << hash["name"] unless hash["name"] == nil
         end
+
         print " Language(s): "
         puts "#{language_array.join(", ")}".colorize(:light_blue)
     end
 
     def self.flag(index)
         flag = self.all[index].flag
+
         print " Flag: "
         puts "#{flag}".colorize(:light_blue)
+
         sleep 3
-        system("xdg-open #{flag}")
+
+        if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+            system "start #{flag}"
+        elsif RbConfig::CONFIG['host_os'] =~ /darwin/
+            system "open #{flag}"
+        elsif RbConfig::CONFIG['host_os'] =~ /linux|bsd/
+            system "xdg-open #{flag}"
+        else
+            puts ""
+        end
     end
 
     def self.total_countries
@@ -100,6 +111,7 @@ class CountryDataCliGem::Country
 
     def self.total_capitals
         total_capitals = self.all.select {|country| country.capital.empty?}
+
         puts " There are #{total_capitals.count} countries in the world that have no capital."
         puts " They are:"
         total_capitals_sorted = total_capitals.sort {|country1, country2| country1.name <=> country2.name}
@@ -115,41 +127,33 @@ class CountryDataCliGem::Country
         puts ""
     end
 
+    def self.sorted_by_population
+        self.all.sort {|country1, country2| country1.population.to_i <=> country2.population.to_i}
+    end
+
     def self.least_populated_country
-        least_populated = self.all.sort {|country1, country2| country1.population.to_i <=> country2.population.to_i}
         puts " The ten least populated countries in the world are:"
-        least_populated[0..9].each.with_index(1) do |country, index|
+
+        sorted_by_population[0..9].each.with_index(1) do |country, index|
             puts " #{index}. #{country.name}, Population: #{country.population.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}"
         end
         puts ""
     end
 
     def self.most_populated_country
-        most_populated = self.all.sort {|country1, country2| country1.population.to_i <=> country2.population.to_i}
         puts " The ten most populated countries in the world are:"
-        most_populated[-10..CountryDataCliGem::Country.all.size].each.with_index(1) do |country, index|
+
+        sorted_by_population[-10..CountryDataCliGem::Country.all.size].each.with_index(1) do |country, index|
             puts " #{index}. #{country.name}, Population: #{country.population.to_s.reverse.scan(/\d{1,3}/).join(",").reverse}"
         end
-        puts " #{most_populated.last.name} is the country with the highest population in the entire world!"
+
+        puts " #{sorted_by_population.last.name} is the country with the highest population in the entire world!"
         puts ""
     end
 
     def self.total_timezones
-        total_timezones = []
-        self.all.each do |country|
-            total_timezones << country.timezones if country.timezones.size == 1
-        end
-        self.all.each do |countries|
-            if countries.timezones.size > 1
-                    countries.each do |country|
-                    total_timezones << country.timezones
-                end 
-            else
-                break
-            end
-        end
-        total_timezones_count = total_timezones.flatten.uniq.sort
         most_timezones = self.all.sort {|country1, country2| country1.timezones.size <=> country2.timezones.size}
+
         puts " The country that has the most time zones is #{most_timezones.last.name}."
         puts " #{most_timezones.last.name} has a total of #{most_timezones.last.timezones.count} different timezones."
         puts ""    
@@ -157,19 +161,20 @@ class CountryDataCliGem::Country
 
     def self.total_borders
         most_borders = self.all.sort {|country1, country2| country1.borders.size <=> country2.borders.size}
-        puts " The country that has the most borders is #{most_borders.last.name}"
+        
+        puts " The country that has the most borders is #{most_borders.last.name}."
         puts " #{most_borders.last.name} has a total of #{most_borders.last.borders.count} borders."
         puts ""
     end
 
     def self.total_currencies
-        most_currencies = self.all.sort {|country1, country2| country1.currencies.size <=> country2.currencies.size}
+        most_currencies_sorted = self.all.sort {|country1, country2| country1.currencies.size <=> country2.currencies.size}
         total_currencies_array = []
-        most_currencies.last.currencies.each do |hash|
+        most_currencies_sorted.last.currencies.each do |hash|
             total_currencies_array << hash["name"] unless hash["name"] == nil
         end
-        puts " The country that has the most currencies is #{most_currencies.last.name}."
-        puts " #{most_currencies.last.name} has a total of #{total_currencies_array.count} different currencies."
+        puts " The country that has the most currencies is #{most_currencies_sorted.last.name}."
+        puts " #{most_currencies_sorted.last.name} has a total of #{total_currencies_array.count} different currencies."
         puts " They are:"
         sorted_array = total_currencies_array.sort
         sorted_array.each.with_index(1) do |currency, index| 
@@ -179,13 +184,13 @@ class CountryDataCliGem::Country
     end
 
     def self.total_languages
-        most_languages = self.all.sort {|country1, country2| country1.languages.size <=> country2.languages.size}
+        most_languages_sorted = self.all.sort {|country1, country2| country1.languages.size <=> country2.languages.size}
         total_languages_array = []
-        most_languages.last.languages.each do |hash|
+        most_languages_sorted.last.languages.each do |hash|
             total_languages_array << hash["name"] unless hash["name"] == nil
         end
-        puts " The country that speaks the most languages is #{most_languages.last.name}."
-        puts " #{most_languages.last.name} speaks #{total_languages_array.count} different languages."
+        puts " The country that speaks the most languages is #{most_languages_sorted.last.name}."
+        puts " #{most_languages_sorted.last.name} speaks #{total_languages_array.count} different languages."
         puts " They are:"
         sorted_array = total_languages_array.sort
         sorted_array.each.with_index(1) do |language, index| 
